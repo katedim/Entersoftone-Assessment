@@ -1,0 +1,99 @@
+{
+  "employees": [
+    {
+      "id": 1,
+      "fullName": "Michael Scott",
+      "department": "Management",
+      "email": "michael.scott@dundermifflin.com",
+      "status": "available",
+      "hireDate": "2005-04-15T00:00:00Z",
+      "notes": "Regional Manager, World's Best Boss",
+      "image": "/images/michael_scott.jpg"
+    },
+    {
+      "id": 2,
+      "fullName": "Dwight Schrute",
+      "department": "Sales",
+      "email": "dwight.schrute@dundermifflin.com",
+      "status": "busy",
+      "hireDate": "2003-06-01T00:00:00Z",
+      "notes": "Assistant to the Regional Manager",
+      "image": "/images/dwight_schrute.jpg"
+    },
+    {
+      "id": 3,
+      "fullName": "Jim Halpert",
+      "department": "Sales",
+      "email": "jim.halpert@dundermifflin.com",
+      "status": "away",
+      "hireDate": "2004-09-12T00:00:00Z",
+      "notes": "Prankster and top salesperson",
+      "image": "/images/jim_halpert.png"
+    },
+    {
+      "id": 4,
+      "fullName": "Pam Beesly",
+      "department": "Reception",
+      "email": "pam.beesly@dundermifflin.com",
+      "status": "available",
+      "hireDate": "2005-01-10T00:00:00Z",
+      "notes": "Receptionist and artist",
+      "image": "/images/pam_beesly.jpg"
+    },
+    {
+      "id": 5,
+      "fullName": "Stanley Hudson",
+      "department": "Sales",
+      "email": "stanley.hudson@dundermifflin.com",
+      "status": "do not disturb",
+      "hireDate": "1998-02-20T00:00:00Z",
+      "notes": "Crossword enthusiast",
+      "image": "/images/stanley_hudson.png"
+    },
+    {
+      "id": 6,
+      "fullName": "Angela Martin",
+      "department": "Accounting",
+      "email": "angela.martin@dundermifflin.com",
+      "status": "busy",
+      "hireDate": "2001-08-15T00:00:00Z",
+      "notes": "Cat lover and accountant"
+    },
+    {
+      "id": 7,
+      "fullName": "Kevin Malone",
+      "department": "Accounting",
+      "email": "kevin.malone@dundermifflin.com",
+      "status": "available",
+      "hireDate": "2002-10-30T00:00:00Z",
+      "notes": "Loves chili"
+    },
+    {
+      "id": 8,
+      "fullName": "Kelly Kapoor",
+      "department": "Customer Service",
+      "email": "kelly.kapoor@dundermifflin.com",
+      "status": "available",
+      "hireDate": "2006-03-05T00:00:00Z",
+      "notes": "Talkative and trendy"
+    },
+    {
+      "id": 9,
+      "fullName": "Ryan Howard",
+      "department": "Temp",
+      "email": "ryan.howard@dundermifflin.com",
+      "status": "in a call",
+      "hireDate": "2007-07-07T00:00:00Z",
+      "notes": "Temporary employee turned executive"
+    },
+    {
+      "id": 10,
+      "fullName": "Creed Bratton",
+      "department": "Quality Assurance",
+      "email": "creed.bratton@dundermifflin.com",
+      "status": "away",
+      "hireDate": "1995-11-11T00:00:00Z",
+      "notes": "Mysterious and eccentric"
+    }
+  ]
+}

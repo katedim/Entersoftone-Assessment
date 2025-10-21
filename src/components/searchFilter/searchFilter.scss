@@ -1,0 +1,12 @@
+.employee-filter {
+  display: flex;
+  gap: 16px;
+  margin: 20px auto;
+  max-width: 600px;
+  padding: 0 16px;
+
+  &__search,
+  &__select {
+    flex: 1;
+  }
+}
