@@ -6,64 +6,88 @@ import {
   TableCell,
   Paper,
   TableRow,
-  Box
+  Box,
+  Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+
+import SearchFilter from "../searchFilter/searchFilter";
+import { fetchEmployees } from "../../features/employees/employeeSlice";
+import type { RootState, AppDispatch } from "../../app/store";
 import type { Employee } from "../../employeeType";
-import SearchFilter from "../searchFilter/searchFilter"; 
 
 export default function EmployeesTable() {
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
 
-  const [employees, setEmployees] = useState<Employee[]>([]);
-
+  const { employees, status, search, department } = useSelector(
+    (state: RootState) => state.employees
+  );
 
   useEffect(() => {
-    fetch('/data/employees.json')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => setEmployees(data.employees))
-      .catch(error => console.error('There has been a problem while fetching data:', error));
-  }, []);
+    if (status === "idle") {
+      dispatch(fetchEmployees());
+    }
+  }, [dispatch, status]);
 
-    return (
-            <Box sx={{ maxWidth: 900, mx: "auto", mt: 4 }}>
-      {/* Render SearchFilter before the table */}
+  const filteredEmployees = employees.filter((emp) => {
+    const matchesSearch =
+      emp.fullName.toLowerCase().includes(search.toLowerCase()) ||
+      emp.email.toLowerCase().includes(search.toLowerCase());
+    const matchesDepartment =
+      department === "" || emp.department === department;
+    return matchesSearch && matchesDepartment;
+  });
+
+  return (
+    <Box sx={{ maxWidth: 900, mx: "auto", mt: 4 }}>
       <SearchFilter />
-      <TableContainer component={Paper} sx={{ maxHeight: "400px" }}>
-        <Table aria-label="simple table" stickyHeader>
-          <TableHead>
-            <TableRow>
-              <TableCell>Full Name</TableCell>
-              <TableCell>Department</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Status</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {employees.map((emp) => (
-              <TableRow
-                key={emp.id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                hover
-                style={{ cursor: "pointer" }}
-                onClick={() => navigate(`/employee/${emp.id}`)}
-              >
-                <TableCell>{emp.fullName}</TableCell>
-                <TableCell>{emp.department}</TableCell>
-                <TableCell>{emp.email}</TableCell>
-                <TableCell>{emp.status}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      </Box>
-    );
-  };
 
+      {status === "loading" && <Typography>Loading...</Typography>}
+      {status === "failed" && (
+        <Typography color="error">Failed to load employees.</Typography>
+      )}
+
+      {status === "succeeded" && (
+        <TableContainer component={Paper} sx={{ maxHeight: "400px" }}>
+          <Table aria-label="simple table" stickyHeader>
+            <TableHead>
+              <TableRow>
+                <TableCell>Full Name</TableCell>
+                <TableCell>Department</TableCell>
+                <TableCell>Email</TableCell>
+                <TableCell>Status</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {filteredEmployees.length > 0 ? (
+                filteredEmployees.map((emp: Employee) => (
+                  <TableRow
+                    key={emp.id}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    hover
+                    style={{ cursor: "pointer" }}
+                    onClick={() => navigate(`/employee/${emp.id}`)}
+                  >
+                    <TableCell>{emp.fullName}</TableCell>
+                    <TableCell>{emp.department}</TableCell>
+                    <TableCell>{emp.email}</TableCell>
+                    <TableCell>{emp.status}</TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={4} align="center">
+                    No employees found
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
+    </Box>
+  );
+}

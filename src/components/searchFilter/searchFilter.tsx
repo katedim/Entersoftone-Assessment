@@ -1,22 +1,28 @@
 import { Box, TextField, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import type { RootState, AppDispatch } from '../../app/store';
+import { setSearch, setDepartment } from '../../features/employees/employeeSlice';
 import './SearchFilter.scss';
+import type { SelectChangeEvent } from '@mui/material/Select';
 
 export default function SearchFilter() {
-  const [departments, setDepartments] = useState<string[]>([]);
-  const [search, setSearch] = useState('');
-  const [selectedDepartment, setSelectedDepartment] = useState('');
+  const dispatch = useDispatch<AppDispatch>();
+  const search = useSelector((state: RootState) => state.employees.search);
+  const selectedDepartment = useSelector((state: RootState) => state.employees.department);
 
-  useEffect(() => {
-    fetch('/data/employees.json')
-      .then((res) => res.json())
-      .then((data) => {
-        const allDepartments = (data.employees as { department: string }[]).map(emp => emp.department);
-        const uniqueDepartments = Array.from(new Set(allDepartments));
-        setDepartments(uniqueDepartments.sort());
-      })
-      .catch((err) => console.error('Failed to load departments:', err));
-  }, []);
+   const employees = useSelector((state: RootState) => state.employees.employees);
+
+   const departments = Array.from(
+    new Set(employees.map((emp) => emp.department))
+  ).sort();
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setSearch(e.target.value));
+  };
+
+  const handleDepartmentChange = (e: SelectChangeEvent) => {
+    dispatch(setDepartment(e.target.value));
+  };
 
   return (
     <Box className="employee-filter">
@@ -25,7 +31,7 @@ export default function SearchFilter() {
         label="Search by name or email"
         variant="outlined"
         value={search}
-        onChange={(e) => setSearch(e.target.value)}
+        onChange={handleSearchChange}
         className="employee-filter__search"
       />
 
@@ -34,7 +40,7 @@ export default function SearchFilter() {
         <Select
           value={selectedDepartment}
           label="Department"
-          onChange={(e) => setSelectedDepartment(e.target.value)}
+          onChange={handleDepartmentChange}
         >
           <MenuItem value="">All Departments</MenuItem>
           {departments.map((dept) => (
