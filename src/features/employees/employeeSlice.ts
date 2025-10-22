@@ -14,8 +14,8 @@ const initialState: EmployeesState = {
   employees: [],
   status: 'idle',
   error: null,
-  search: '',
-  department: '',
+  search: localStorage.getItem('search') || '',
+  department: localStorage.getItem('department') || '',
 };
 export const fetchEmployees = createAsyncThunk<Employee[]>(
   'employees/fetchEmployees',
@@ -32,13 +32,17 @@ const employeeSlice = createSlice({
   reducers: {
     setSearch(state, action: PayloadAction<string>) {
       state.search = action.payload;
+      localStorage.setItem('search', action.payload);
     },
     setDepartment(state, action: PayloadAction<string>) {
       state.department = action.payload;
+      localStorage.setItem('department', action.payload);
     },
     resetFilters(state) {
       state.search = '';
       state.department = '';
+      localStorage.removeItem('search');
+      localStorage.removeItem('department');
     },
   },
   extraReducers: (builder) => {
