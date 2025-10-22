@@ -6,5 +6,5 @@ export interface Employee {
     status: string;
     hireDate: Date;
     notes: string;
-    image: string;
+    image?: string;
 }

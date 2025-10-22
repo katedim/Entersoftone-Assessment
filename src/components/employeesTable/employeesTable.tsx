@@ -18,6 +18,8 @@ import { fetchEmployees } from "../../features/employees/employeeSlice";
 import type { RootState, AppDispatch } from "../../app/store";
 import type { Employee } from "../../employeeType";
 
+import "./EmployeesTable.scss";
+
 export default function EmployeesTable() {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
@@ -42,7 +44,7 @@ export default function EmployeesTable() {
   });
 
   return (
-    <Box sx={{ maxWidth: 900, mx: "auto", mt: 4 }}>
+    <Box className="employees-table-container">
       <SearchFilter />
 
       {status === "loading" && <Typography>Loading...</Typography>}
@@ -51,14 +53,22 @@ export default function EmployeesTable() {
       )}
 
       {status === "succeeded" && (
-        <TableContainer component={Paper} sx={{ maxHeight: "400px" }}>
+        <TableContainer component={Paper} className="table-container">
           <Table aria-label="simple table" stickyHeader>
             <TableHead>
               <TableRow>
-                <TableCell>Full Name</TableCell>
-                <TableCell>Department</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Status</TableCell>
+                <TableCell className="employees-table-header-cell">
+                  Full Name
+                </TableCell>
+                <TableCell className="employees-table-header-cell">
+                  Department
+                </TableCell>
+                <TableCell className="employees-table-header-cell">
+                  Email
+                </TableCell>
+                <TableCell className="employees-table-header-cell">
+                  Status
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -66,20 +76,29 @@ export default function EmployeesTable() {
                 filteredEmployees.map((emp: Employee) => (
                   <TableRow
                     key={emp.id}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    className="table-row"
                     hover
-                    style={{ cursor: "pointer" }}
                     onClick={() => navigate(`/employee/${emp.id}`)}
                   >
                     <TableCell>{emp.fullName}</TableCell>
                     <TableCell>{emp.department}</TableCell>
                     <TableCell>{emp.email}</TableCell>
-                    <TableCell>{emp.status}</TableCell>
+                    <TableCell>
+                      <Box display="flex" alignItems="center" gap={0.5}>
+                        {emp.status}
+                        <Box
+                          className={`status-dot ${emp.status.replace(
+                            /\s/g,
+                            "-"
+                          )}`}
+                        />
+                      </Box>
+                    </TableCell>
                   </TableRow>
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={4} align="center">
+                  <TableCell colSpan={4} className="no-employees">
                     No employees found
                   </TableCell>
                 </TableRow>

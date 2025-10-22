@@ -2,6 +2,8 @@
   display: flex;
   padding: 1rem 0;
   background: linear-gradient(to right, #ffffff, rgba(17, 104, 229, 1));
+  border-radius: 12px; 
+  overflow: hidden;
 
   .header-container {
     display: flex;

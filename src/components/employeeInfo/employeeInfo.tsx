@@ -8,6 +8,7 @@ import {
   resetFilters,
 } from "../../features/employees/employeeSlice";
 import HomeIcon from "@mui/icons-material/Home";
+import "./EmployeeInfo.scss";
 
 export default function EmployeeInfo() {
   const { id } = useParams();
@@ -28,11 +29,11 @@ export default function EmployeeInfo() {
   const employee = employees.find((emp) => emp.id === Number(id)) || null;
 
   return (
-    <Box width="300px" margin="0 auto" mt="30px">
+    <Box className="employee-info-container">
       {status === "loading" && <Typography>Loading...</Typography>}
 
       {status === "failed" && (
-        <Box textAlign="center">
+        <Box className="error-box">
           <Typography color="error" mb={2}>
             Failed to load employee data.
           </Typography>
@@ -47,7 +48,7 @@ export default function EmployeeInfo() {
       )}
 
       {!employee && status === "succeeded" && (
-        <Box textAlign="center">
+        <Box className="not-found-box">
           <Typography mb={2}>Employee not found.</Typography>
           <Button
             variant="outlined"
@@ -61,44 +62,46 @@ export default function EmployeeInfo() {
 
       {employee && (
         <Card>
-          <CardContent sx={{ textAlign: "center" }}>
+          <CardContent className="employee-card">
             {employee.image && (
               <Box
                 component="img"
                 src={employee.image}
                 alt={employee.fullName}
-                sx={{
-                  width: 120,
-                  height: 120,
-                  borderRadius: "50%",
-                  objectFit: "cover",
-                  mb: 2,
-                  mx: "auto",
-                  display: "block",
-                }}
+                className="employee-image "
               />
             )}
             <Typography gutterBottom variant="h5" component="div">
               {employee.fullName}
             </Typography>
-            <Typography gutterBottom variant="body2" color="text.secondary">
-              Department: {employee.department}
+            <Typography gutterBottom variant="body2" color="text.secondary" data-label="Department">
+             {employee.department}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Email: {employee.email}
+            <Typography variant="body2" color="text.secondary" data-label="Email">
+              {employee.email}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Status: {employee.status}
+            <Box className="status-wrapper">
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              component="div"
+              data-label="Status"
+            >
+              <Box className="status-line">
+                {employee.status}
+                <Box className={`status-dot ${employee.status.replace(/\s/g, "-")}`} />
+              </Box>
             </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Hire Date: {new Date(employee.hireDate).toLocaleDateString()}
+          </Box>
+            <Typography variant="body2" color="text.secondary" data-label="Hire Date">
+              {new Date(employee.hireDate).toLocaleDateString()}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Notes: {employee.notes}
+            <Typography variant="body2" color="text.secondary" data-label="Notes">
+              {employee.notes}
             </Typography>
             <Button
               variant="contained"
-              sx={{ mt: 3 }}
+              className="employee-back-button"
               onClick={() => {
                 dispatch(resetFilters());
                 navigate("/employees");

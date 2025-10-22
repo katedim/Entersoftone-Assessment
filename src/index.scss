@@ -1,0 +1,39 @@
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+
+  &.available {
+    background-color: #28a745;
+  }
+
+  &.busy {
+    background-color: #dc3545;
+  }
+
+  &.away {
+    background-color: #ffc107;
+  }
+
+  &.in-a-call {
+    background-color: #17a2b8;
+  }
+
+  &.do-not-disturb {
+    background-color: #dc3545;
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 2px;
+      right: 2px;
+      height: 2px;
+      background-color: #ffffff;
+      border-radius: 1px;
+      transform: translateY(-50%);
+    }
+  }
+}
