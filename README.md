@@ -1,5 +1,5 @@
 # Employee Management App
-A React + +Vite + TypeScript project built to display and manage a list of employees.
+A React + Vite + TypeScript project built to display and manage a list of employees.
 This project demonstrates API data fetching, filtering, navigation, SCSS styling, and state management with Redux Toolkit.
 
 ## Prerequisites
