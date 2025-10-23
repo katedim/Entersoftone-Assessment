@@ -6,7 +6,7 @@ This project demonstrates API data fetching, filtering, navigation, SCSS styling
 
 Make sure you have the following installed on your machine:
 
-- Node.js (v18 or higher)
+- Node.js (v22.12 or higher)
 - npm (v6 or higher)
 
 ## Getting Started
