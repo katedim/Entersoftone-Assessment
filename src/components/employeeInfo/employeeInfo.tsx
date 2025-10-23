@@ -40,7 +40,10 @@ export default function EmployeeInfo() {
           <Button
             variant="outlined"
             endIcon={<HomeIcon />}
-            onClick={() => navigate("/employees")}
+            onClick={() => {
+                dispatch(resetFilters());
+                navigate("/employees");
+            }}
           >
             Back
           </Button>
@@ -53,7 +56,10 @@ export default function EmployeeInfo() {
           <Button
             variant="outlined"
             endIcon={<HomeIcon />}
-            onClick={() => navigate("/employees")}
+            onClick={() => {
+                dispatch(resetFilters());
+                navigate("/employees");
+            }}
           >
             Back
           </Button>

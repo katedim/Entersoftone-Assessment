@@ -47,66 +47,82 @@ export default function EmployeesTable() {
     <Box className="employees-table-container">
       <SearchFilter />
 
-      {status === "loading" && <Typography>Loading...</Typography>}
-      {status === "failed" && (
-        <Typography color="error">Failed to load employees.</Typography>
-      )}
+      <TableContainer component={Paper} className="table-container">
+        <Table aria-label="simple table" stickyHeader>
+          <TableHead>
+            <TableRow>
+              <TableCell className="employees-table-header-cell">
+                Full Name
+              </TableCell>
+              <TableCell className="employees-table-header-cell">
+                Department
+              </TableCell>
+              <TableCell className="employees-table-header-cell">
+                Email
+              </TableCell>
+              <TableCell className="employees-table-header-cell">
+                Status
+              </TableCell>
+            </TableRow>
+          </TableHead>
 
-      {status === "succeeded" && (
-        <TableContainer component={Paper} className="table-container">
-          <Table aria-label="simple table" stickyHeader>
-            <TableHead>
+          <TableBody>
+            {status === "loading" && (
               <TableRow>
-                <TableCell className="employees-table-header-cell">
-                  Full Name
-                </TableCell>
-                <TableCell className="employees-table-header-cell">
-                  Department
-                </TableCell>
-                <TableCell className="employees-table-header-cell">
-                  Email
-                </TableCell>
-                <TableCell className="employees-table-header-cell">
-                  Status
+                <TableCell colSpan={4} align="center">
+                  <Typography>Loading...</Typography>
                 </TableCell>
               </TableRow>
-            </TableHead>
-            <TableBody>
-              {filteredEmployees.length > 0 ? (
-                filteredEmployees.map((emp: Employee) => (
-                  <TableRow
-                    key={emp.id}
-                    className="table-row"
-                    hover
-                    onClick={() => navigate(`/employee/${emp.id}`)}
-                  >
-                    <TableCell>{emp.fullName}</TableCell>
-                    <TableCell>{emp.department}</TableCell>
-                    <TableCell>{emp.email}</TableCell>
-                    <TableCell>
-                      <Box display="flex" alignItems="center" gap={0.5}>
-                        {emp.status}
-                        <Box
-                          className={`status-dot ${emp.status.replace(
-                            /\s/g,
-                            "-"
-                          )}`}
-                        />
-                      </Box>
+            )}
+
+            {status === "failed" && (
+              <TableRow>
+                <TableCell colSpan={4} align="center">
+                  <Typography color="error">
+                    Failed to load employees.
+                  </Typography>
+                </TableCell>
+              </TableRow>
+            )}
+
+            {status === "succeeded" && (
+              <>
+                {filteredEmployees.length > 0 ? (
+                  filteredEmployees.map((emp: Employee) => (
+                    <TableRow
+                      key={emp.id}
+                      className="table-row"
+                      hover
+                      onClick={() => navigate(`/employee/${emp.id}`)}
+                    >
+                      <TableCell>{emp.fullName}</TableCell>
+                      <TableCell>{emp.department}</TableCell>
+                      <TableCell>{emp.email}</TableCell>
+                      <TableCell>
+                        <Box display="flex" alignItems="center" gap={0.5}>
+                          {emp.status}
+                          <Box
+                            className={`status-dot ${emp.status.replace(
+                              /\s/g,
+                              "-"
+                            )}`}
+                          />
+                        </Box>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={4} className="no-employees">
+                      No employees found
                     </TableCell>
                   </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell colSpan={4} className="no-employees">
-                    No employees found
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      )}
+                )}
+              </>
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </Box>
   );
 }
