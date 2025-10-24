@@ -23,13 +23,13 @@ Make sure you have the following installed on your machine:
     npm install
     ```
 
-3. Start the frontend application:
+3. Start the application:
 
     ```
     npm run dev
     ```
 
-    The frontend application should now be running and accessible in your web browser.
+    The application should now be running and accessible in your web browser.
 
 ## Testing
 
